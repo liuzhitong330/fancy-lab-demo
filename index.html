@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wnt, OPC Migration, and Remyelination — Cathy Liu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 0 auto;
+         padding: 2.5rem 1.5rem 4rem; line-height: 1.65; color: #222; background: #fff; }
+  h1, h2, h3 { font-family: -apple-system, system-ui, sans-serif; }
+  h1 { font-size: 1.45rem; margin-bottom: .2rem; }
+  .byline { font-family: system-ui, sans-serif; font-size: .85rem; color: #777; margin-bottom: 2rem; }
+  h2 { font-size: 1.1rem; margin-top: 2.5rem; border-bottom: 1px solid #eee; padding-bottom: .3rem; }
+  .note { background: #f6f6f4; border-left: 3px solid #999; padding: .8rem 1rem;
+          font-family: system-ui, sans-serif; font-size: .85rem; color: #444; margin: 1.2rem 0; }
+  figure { margin: 1.2rem 0; }
+  figure img { max-width: 100%; display: block; }
+  figcaption { font-family: system-ui, sans-serif; font-size: .78rem; color: #777; margin-top: .4rem; }
+  .code-wrap { overflow-x: auto; margin: 1rem 0; }
+  pre { white-space: pre; background: #f8f8f8; padding: 1rem; font-size: .8rem;
+        border-left: 3px solid #ddd; font-family: ui-monospace, Menlo, monospace; }
+  table { border-collapse: collapse; width: 100%; font-size: .88rem; margin: 1rem 0;
+          font-family: system-ui, sans-serif; }
+  td, th { padding: .4rem .7rem; border-bottom: 1px solid #eee; text-align: left; }
+  th { font-weight: 600; color: #555; }
+  a { color: #2255aa; }
+  .meta { font-family: system-ui, sans-serif; font-size: .8rem; color: #888;
+          margin-top: 3rem; border-top: 1px solid #eee; padding-top: 1rem; }
+  .tag { display: inline-block; font-family: system-ui, sans-serif; font-size: .75rem;
+         background: #eef2f8; color: #2255aa; padding: .15rem .5rem;
+         border-radius: 3px; margin-right: .3rem; }
+  .highlight { background: #fff8f0; border-left: 3px solid #e67e22; padding: .6rem 1rem;
+               font-family: system-ui, sans-serif; font-size: .88rem; margin: 1rem 0; }
+  .highlight2 { background: #f0f8ff; border-left: 3px solid #2980b9; padding: .6rem 1rem;
+                font-family: system-ui, sans-serif; font-size: .88rem; margin: 1rem 0; }
+</style>
+</head>
+<body>
+
+<h1>Wnt Signaling, OPC Markers, and Vascular Co-Distribution in the Mouse Brain</h1>
+<div class="byline">Cathy Liu · cathyliu014@gmail.com · personal exploratory project, July 2026</div>
+
+<span class="tag">Wnt signaling</span>
+<span class="tag">OPC differentiation</span>
+<span class="tag">remyelination</span>
+<span class="tag">vascular scaffold</span>
+<span class="tag">MS / cerebral palsy</span>
+<span class="tag">Allen Brain Atlas</span>
+<span class="tag">Python</span>
+
+<p style="margin-top:1.2rem">
+The <a href="https://www.stevefancylab.org/" target="_blank">Fancy lab</a> has made two
+discoveries that I find mechanistically compelling and want to understand more deeply:
+(1) the Wnt pathway is a potent inhibitor of OPC differentiation, is pathologically
+dysregulated in white matter injury, and can be targeted pharmacologically to accelerate
+repair; and (2) OPCs use blood vessel surfaces as a physical scaffold for their migration
+during both development and lesion repair. I was curious how these two findings look in
+the spatial transcriptional landscape of the brain — where is Wnt signaling most active,
+where are OPCs most abundant, and does OPC abundance track vascular density across regions?
+</p>
+
+<p>
+I pulled <em>in situ</em> hybridization expression data from the
+<a href="https://mouse.brain-map.org/" target="_blank">Allen Mouse Brain Atlas</a>
+for 16 genes spanning the Wnt pathway, OPC/oligodendrocyte lineage, and vascular markers
+across seven brain regions, and then asked whether OPC marker expression and vascular
+marker expression are correlated across those regions.
+</p>
+
+<div class="note">
+<strong>What this is.</strong> Personal exploratory analysis, not novel research.
+Data from the Allen Mouse Brain Atlas (Allen Institute for Brain Science, 2004), via the
+public RMA API. ISH expression energy is a bulk regional average — it cannot resolve
+individual cell types. The corpus callosum is excluded: being a pure fiber tract,
+it yields zero ISH signal (no cell bodies), illustrating why in situ hybridization
+alone is insufficient for white matter biology.
+</div>
+
+<h2>Wnt, OPC, and myelin gene landscape</h2>
+
+<figure>
+  <img src="myelin_heatmap.svg?v=1"
+       alt="Heatmap of Wnt, OPC/OL, and vascular genes across 7 brain regions">
+  <figcaption>ISH expression energy (row-normalized per gene) for 16 genes in 7 brain regions.
+  Brainstem highlighted in orange — the most heavily myelinated region in the dataset.
+  Hippocampus highlighted in blue — the most OPC-rich region (highest Pdgfra).
+  Raw values annotated where expression energy &gt; 1.5.</figcaption>
+</figure>
+
+<div class="highlight">
+<strong>Brainstem concentrates all four mature myelin genes.</strong>
+Mbp (11.9), Plp1 (21.7), Mog (9.7), and Cnp (10.5) all peak in brainstem — the most
+heavily myelinated structure in the Allen Atlas. This is also where Tcf7l2 (a Wnt-responsive
+transcription factor, TCF4) peaks (8.4), which is consistent with Wnt activity being
+maintained in myelinated regions even after oligodendrocyte maturation — potentially through
+non-canonical Wnt signaling in mature oligodendrocytes or in the neighboring astrocytes and
+vascular cells that provide the local microenvironment.
+</div>
+
+<div class="highlight2">
+<strong>Hippocampus is the most OPC-rich region.</strong>
+Pdgfra (2.58) peaks in hippocampus, consistent with the hippocampus being a site of
+sustained adult neurogenesis-adjacent OPC activity. This is also where Ctnnb1 (β-catenin,
+12.82) is highest — the central mediator of canonical Wnt signaling. The co-peak of OPC
+markers and Wnt pathway activity in hippocampus is consistent with the Fancy lab's finding
+that Wnt signaling holds OPCs in a progenitor state and prevents precocious differentiation.
+</div>
+
+<h2>OPC–vascular co-distribution</h2>
+
+<figure>
+  <img src="opc_vascular.svg?v=1"
+       alt="Scatter plot of OPC index vs vascular index across brain regions">
+  <figcaption>Each dot = one brain region; dot size = myelin gene expression (mean Mbp+Plp1+Mog).
+  X-axis = vascular index (mean Pecam1+Cdh5+Cldn5); Y-axis = OPC index (mean Pdgfra+Cspg4).
+  The positive correlation across regions supports the idea that OPCs distribute in the same
+  anatomical territories as blood vessels — consistent with the vascular scaffold model.</figcaption>
+</figure>
+
+<p>
+The scatter reveals a positive correlation between OPC markers and vascular markers across
+brain regions — regions with more blood vessel signal also tend to have more OPC signal.
+Several observations stand out:
+</p>
+<ul>
+<li>
+<strong>Hippocampus</strong> (top-right) has the highest OPC index and among the highest
+vascular indices — consistent with it being both OPC-rich and heavily vascularized,
+making it a good model system for studying developmental OPC–vessel interactions.
+</li>
+<li>
+<strong>Brainstem</strong> (large dot, bottom-right) has high vascular signal but low
+OPC progenitor signal — it has already completed myelination, with few remaining
+undifferentiated OPCs. The large dot size (high myelin expression) confirms that
+OPC differentiation has run to completion there.
+</li>
+<li>
+<strong>Striatum and isocortex</strong> cluster in the intermediate zone — active
+myelination with ongoing OPC pools and moderate vascularity. The striatum is a commonly
+used model in the Fancy lab's hypoxic injury work; its intermediate position here
+is consistent with sustained OPC activity in that structure.
+</li>
+</ul>
+
+<h2>Why this connects to the lab's work</h2>
+<ul>
+<li>
+<strong>"Why does myelin repair fail in some lesions but not others?"</strong> —
+The spatial co-distribution of OPCs and vasculature suggests that regional differences
+in vascular density could be part of the answer: lesions in poorly vascularized territories
+may have fewer OPCs reaching them via the scaffold, independent of any intrinsic
+differentiation defect. This connects the vascular and Wnt-inhibition axes.
+</li>
+<li>
+<strong>"How do developmental myelination mechanisms compare to remyelination?"</strong> —
+The brainstem pattern (completed myelination, high myelin genes, low OPC progenitors)
+vs. the hippocampus/striatum pattern (active OPC pool, high Wnt activity) maps out
+where the brain is in "maintenance" mode vs. still undergoing active developmental
+or repair-like myelination. Comparing these transcriptional states to MS lesion microenvironments
+is a natural next step.
+</li>
+<li>
+My background spans wet lab cell biology and computational analysis. I can contribute
+both to in vitro and in vivo experiments and to the data analysis layer. I think my
+combination of practical lab experience and computational background is where I can be
+most useful to your lab.
+</li>
+</ul>
+
+<h2>Methods</h2>
+<p>
+Data retrieved July 2026. Allen Mouse Brain Atlas (Allen Institute for Brain Science, 2004),
+in situ hybridization, adult mouse (P56), via RMA API at
+<code>api.brain-map.org/api/v2/data/query.json</code>.
+Structures: Isocortex (315), Hippocampal formation (1089), Cerebellum (512),
+Striatum/Caudoputamen (672), Hypothalamus (1097), Olfactory bulb (507), Brainstem (313).
+Corpus callosum (776) excluded — all ISH values zero (fiber tract, no cell bodies).
+Expression metric: <em>expression_energy</em> from StructureUnionize.
+OPC index = mean(Pdgfra, Cspg4) expression energy; Vascular index = mean(Pecam1, Cdh5, Cldn5);
+Myelin index = mean(Mbp, Plp1, Mog). Figures: pure Python SVG.
+Code: <a href="fetch_data.py">fetch_data.py</a>, <a href="make_figures.py">make_figures.py</a>.
+Raw data: <a href="expression.tsv">expression.tsv</a>.
+</p>
+
+<div class="meta">
+Cathy Liu — cathyliu014@gmail.com | 415-216-3799<br>
+<a href="https://liuzhitong330.github.io/tvb-llm-robust-neurostim/" target="_blank">Epilepsy neurostimulation project</a> ·
+<a href="https://arxiv.org/abs/2606.04339" target="_blank">arXiv:2606.04339</a>
+</div>
+
+</body>
+</html>
