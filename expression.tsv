@@ -1,4 +1,4 @@
-gene	group	dataset_id	Corpus_callosum	Isocortex	Hippocampus	Cerebellum	Striatum	Hypothalamus	Olfact_bulb	Brainstem
+gene	group	dataset_id	Corpus_callosum	Isocortex	Hippocampus	Cerebellum	Striatum	Hypothalamus	Olfact_bulb	Midbrain
 Axin2	wnt	69838361	0.0	0.5653	0.4431	0.1408	0.1693	0.3341	0.7225	0.6433
 Ctnnb1	wnt	79904258	0.0	8.9605	12.8218	6.6542	9.5053	8.7996	7.0722	8.9716
 Fzd1	wnt	2240	0.0	2.184	1.9256	3.6317	0.475	1.0899	3.3769	2.4634
