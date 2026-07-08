@@ -12,9 +12,9 @@ OUT = Path(__file__).parent
 
 # Drop Corpus_callosum (all zeros) — fiber tract has no cell bodies for ISH
 STRUCTURES = ["Isocortex","Hippocampus","Cerebellum","Striatum",
-              "Hypothalamus","Olfact_bulb","Brainstem"]
+              "Hypothalamus","Olfact_bulb","Midbrain"]
 STRUCT_LABELS = ["Isocortex","Hippocampus","Cerebellum","Striatum",
-                 "Hypothalamus","Olf. bulb","Brainstem"]
+                 "Hypothalamus","Olf. bulb","Midbrain"]
 
 GROUPS = [
     ("Wnt pathway",      ["Axin2","Ctnnb1","Fzd1","Tcf7l2","Wnt3a"],          "#e67e22"),
@@ -65,7 +65,7 @@ n_structs = len(STRUCTURES)
 W = LEFT + n_structs * CELL_W + 70
 H = TOP + n_genes * CELL_H + 100
 
-BS_IDX = STRUCTURES.index("Brainstem")
+BS_IDX = STRUCTURES.index("Midbrain")
 HIPP_IDX = STRUCTURES.index("Hippocampus")
 
 # Column highlights
@@ -202,7 +202,7 @@ REGION_COLORS = {
     "Striatum":     "#e67e22",
     "Hypothalamus": "#8e44ad",
     "Olfact_bulb":  "#16a085",
-    "Brainstem":    "#7f8c8d",
+    "Midbrain":     "#7f8c8d",
 }
 
 dots = ""
@@ -217,7 +217,7 @@ for i, reg in enumerate(STRUCTURES):
     lx = cx + r + 4
     ly = cy + 4
     # adjust label for brainstem (bottom right)
-    if reg == "Brainstem":
+    if reg == "Midbrain":
         lx = cx - r - 4
         ly = cy - r - 4
         anchor = "end"
