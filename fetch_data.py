@@ -35,7 +35,7 @@ STRUCTURES = {
     "Striatum":        672,
     "Hypothalamus":    1097,
     "Olfact_bulb":     507,
-    "Brainstem":       313,
+    "Midbrain":        313,
 }
 
 def get_dataset(gene):
